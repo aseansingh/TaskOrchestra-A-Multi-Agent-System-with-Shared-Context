@@ -1,29 +1,29 @@
 import os
 from dotenv import load_dotenv
-from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+from anthropic import Client
 
 load_dotenv()
-anthropic = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+client = Client(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 def researcher_agent(context):
     task = context.get("user_task", "No task provided")
 
-    prompt = (
-        f"{HUMAN_PROMPT} Please research the following task and provide a brief overview:\n\n{task}\n\n{AI_PROMPT}"
-    )
+    prompt = f"Please research the following task and provide a brief overview:\n\n{task}"
 
     try:
-        response = anthropic.completions.create(
-            model="claude-3-sonnet-20240229", 
-            max_tokens_to_sample=500,
-            prompt=prompt,
+        response = client.messages.create(
+            model="claude-3-haiku-20240307",
+            max_tokens=500,
             temperature=0.7,
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
         )
-        research = response.completion.strip()
+        research = response.content[0].text.strip()
         context["research"] = research
         return context
 
     except Exception as e:
-        print(f"❌ Error calling Claude API: {e}")
+        print(f" Error calling Claude API: {e}")
         context["research"] = "Error: Unable to generate research."
         return context
