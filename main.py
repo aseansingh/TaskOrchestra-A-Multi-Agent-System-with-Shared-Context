@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from context.mcp_context import load_context, save_context
 from agents.planner_agent import planner_agent
 
