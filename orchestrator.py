@@ -14,8 +14,9 @@ AGENT_PIPELINE = [
     ("History Viewer Agent", history_viewer_agent)
 ]
 
-def run_pipeline():
-    context = load_context()
+def run_pipeline(context=None):
+    if context is None:
+        context = load_context()
 
     if not context.get("user_task"):
         context["user_task"] = input("Enter the task you want help with: ")
@@ -37,6 +38,7 @@ def run_pipeline():
         else:
             print(f"{key}: {value}")
 
+    return context  # Add return so FastAPI can respond with this data
 
 if __name__ == "__main__":
     run_pipeline()
