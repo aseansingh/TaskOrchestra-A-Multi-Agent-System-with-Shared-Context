@@ -1,5 +1,3 @@
-openai
-langchain
+anthropic
 tqdm
-mcp-protocol
 python-dotenv

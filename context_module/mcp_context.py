@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 # File to store the shared context
-CONTEXT_FILE = Path("context/context.json")
+CONTEXT_FILE = Path("context_module/context.json")
 
 def load_context():
     """Load shared agent context from disk."""

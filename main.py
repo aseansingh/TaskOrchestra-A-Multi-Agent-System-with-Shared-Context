@@ -2,8 +2,10 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from context.mcp_context import load_context, save_context
+from context_module.mcp_context import load_context, save_context
 from agents.planner_agent import planner_agent
+from agents.researcher_agent import researcher_agent
+
 
 def main():
     context = load_context()
@@ -13,6 +15,10 @@ def main():
 
     print("\nRunning Planner Agent...")
     context = planner_agent(context)
+
+    print("\nRunning Researcher Agent (Claude)...")
+    context = researcher_agent(context)
+
 
     save_context(context)
 
